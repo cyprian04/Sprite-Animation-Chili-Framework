@@ -6,6 +6,7 @@
 Surface::Surface(const std::string& filename)
 {
 	std::ifstream file(filename, std::ios::binary);
+	assert(file);
 
 	BITMAPFILEHEADER bmFileHeader;
 	file.read(reinterpret_cast<char*>(&bmFileHeader), sizeof(bmFileHeader));
