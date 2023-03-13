@@ -23,7 +23,7 @@ Surface::Surface(const std::string& filename)
 	file.seekg(bmFileHeader.bfOffBits);
 
 	const int padding = (4 - (width * 3) % 4) % 4;
-	for (int y = 0; y < height; y++)
+	for (int y = height - 1; y >= 0; y--) // taki zapis bo w bitmapie pliku bmp pierwsze wartoœci to ostatnie komórki
 	{
 		for (int x = 0; x < width; x++)
 		{
