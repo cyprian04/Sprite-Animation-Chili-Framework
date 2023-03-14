@@ -340,6 +340,28 @@ void Graphics::DrawSprite(int x, int y, const RectI& rect, const Surface& s)
 	}
 }
 
+void Graphics::DrawSprite(int x, int y, RectI rect, const RectI& clip, const Surface& s)
+{
+	if (x < clip.left)
+	{
+		rect.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		rect.top += clip.top - y;
+		y = clip.top;
+	}
+
+	for (int sy = rect.top; sy < rect.bottom; sy++)
+	{
+		for (int sx = rect.left; sx < rect.right; sx++)
+		{
+			PutPixel(x + sx - rect.left, y + sy - rect.top, s.GetPixel(sx, sy));
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception

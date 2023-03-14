@@ -61,6 +61,7 @@ public:
 	void PutPixel( int x,int y,Color c );
 	void DrawSprite( int x,int y,const Surface& s );
 	void DrawSprite(int x, int y, const RectI& rect, const Surface& s);
+	void DrawSprite(int x, int y, RectI rect, const RectI& clip, const Surface& s);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
