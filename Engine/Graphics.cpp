@@ -406,6 +406,15 @@ void Graphics::DrawSprite(int x, int y, RectI rect, const RectI& clip, const Sur
 }
 
 
+void Graphics::DrawSprite(int x, int y, const Surface& s, Color chroma)
+{
+	DrawSprite(x, y, s.GetRect(), s);
+}
+
+void Graphics::DrawSprite(int x, int y, const RectI& rect, const Surface& s, Color chroma)
+{
+	DrawSprite(x, y, rect, GetScreenRect(), s);
+}
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
