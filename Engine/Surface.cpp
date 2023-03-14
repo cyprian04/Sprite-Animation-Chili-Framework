@@ -14,24 +14,43 @@ Surface::Surface(const std::string& filename)
 	BITMAPINFOHEADER bmInfoHeader;
 	file.read(reinterpret_cast<char*>(&bmInfoHeader), sizeof(bmInfoHeader));
 
-	assert(bmInfoHeader.biBitCount == 24);
+	assert(bmInfoHeader.biBitCount == 24 || bmInfoHeader.biBitCount == 32);
 	assert(bmInfoHeader.biCompression == BI_RGB);
 
 	width = bmInfoHeader.biWidth;
 	height = bmInfoHeader.biHeight;
-	pPixels = new Color[width * height];
 
-	file.seekg(bmFileHeader.bfOffBits);
+	int yStart;
+	int yEnd;
+	int dy;
 
-	const int padding = (4 - (width * 3) % 4) % 4;
-	for (int y = height - 1; y >= 0; y--) // taki zapis bo w bitmapie pliku bmp pierwsze wartoœci to ostatnie komórki
+	if (height < 0)
 	{
-		for (int x = 0; x < width; x++)
-		{
-			PutPixel(x,y, Color(file.get(), file.get(), file.get()));
-		}
-		file.seekg(padding, std::ios::cur);
+		height = -height;
+		yStart = 0;
+		yEnd = height;
+		dy = 1;
 	}
+	else
+	{
+		yStart = height - 1;
+		yEnd = -1;
+		dy = -1;
+	}
+	
+		pPixels = new Color[width * height];
+
+		file.seekg(bmFileHeader.bfOffBits);
+
+		const int padding = (4 - (width * 3) % 4) % 4;
+		for (int y = yStart; y != yEnd; y+=dy)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				PutPixel(x, y, Color(file.get(), file.get(), file.get()));
+			}
+			file.seekg(padding, std::ios::cur);
+		}
 }
 
 Surface::Surface( int width,int height )
