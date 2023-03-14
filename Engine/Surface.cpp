@@ -16,6 +16,7 @@ Surface::Surface(const std::string& filename)
 
 	assert(bmInfoHeader.biBitCount == 24 || bmInfoHeader.biBitCount == 32);
 	assert(bmInfoHeader.biCompression == BI_RGB);
+	const bool is32Bit = bmInfoHeader.biBitCount == 32;
 
 	width = bmInfoHeader.biWidth;
 	height = bmInfoHeader.biHeight;
@@ -41,15 +42,22 @@ Surface::Surface(const std::string& filename)
 		pPixels = new Color[width * height];
 
 		file.seekg(bmFileHeader.bfOffBits);
-
+		//only used if file have 24 bits lines
 		const int padding = (4 - (width * 3) % 4) % 4;
 		for (int y = yStart; y != yEnd; y+=dy)
 		{
 			for (int x = 0; x < width; x++)
 			{
 				PutPixel(x, y, Color(file.get(), file.get(), file.get()));
+				if (is32Bit)
+				{
+					file.seekg(1, std::ios::cur);
+				}
 			}
-			file.seekg(padding, std::ios::cur);
+			if (!is32Bit)
+			{
+				file.seekg(padding, std::ios::cur);
+			}
 		}
 }
 
