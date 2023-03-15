@@ -408,12 +408,12 @@ void Graphics::DrawSprite(int x, int y, RectI rect, const RectI& clip, const Sur
 
 void Graphics::DrawSprite(int x, int y, const Surface& s, Color chroma)
 {
-	DrawSprite(x, y, s.GetRect(), s);
+	DrawSprite(x, y, s.GetRect(), s, chroma);
 }
 
 void Graphics::DrawSprite(int x, int y, const RectI& rect, const Surface& s, Color chroma)
 {
-	DrawSprite(x, y, rect, GetScreenRect(), s);
+	DrawSprite(x, y, rect, GetScreenRect(), s, chroma);
 }
 //////////////////////////////////////////////////
 //           Graphics Exception
