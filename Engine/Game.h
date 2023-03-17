@@ -24,8 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Surface.h"
-#include "Animation.h"
 #include "FrameTimer.h"
+#include "Character.h"
 
 class Game
 {
@@ -46,7 +46,6 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Surface surf = Surface("marle32x48.bmp");
-	Animation marle = Animation(0, 0, 32, 48, 4, surf, 0.1f);
+	Character link = Character({ 100.0f, 100.0f });
 	/********************************/
 };
