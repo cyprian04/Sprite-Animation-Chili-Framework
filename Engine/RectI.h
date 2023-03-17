@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "Vei2.h"
 
 class RectI
