@@ -24,8 +24,11 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Surface.h"
+#include "Animation.h"
 #include "FrameTimer.h"
 #include "Character.h"
+#include "Font.h"
+#include "Sound.h"
 
 class Game
 {
@@ -46,6 +49,8 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Character link = Character({ 100.0f, 100.0f });
+	Character link = Character({ 100.0f,100.0f });
+	Font font = "Images\\Fixedsys16x28.bmp";
+	Sound hit = L"Sounds\\hit.wav";
 	/********************************/
 };
