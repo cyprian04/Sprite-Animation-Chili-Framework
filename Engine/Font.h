@@ -3,7 +3,7 @@
 
 #include "Graphics.h"
 #include "Surface.h"
-#include "Vei2.h"
+#include "Vec2.h"
 
 class Font
 {
