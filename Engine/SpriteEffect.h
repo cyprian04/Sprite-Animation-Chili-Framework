@@ -75,4 +75,7 @@ namespace SpriteEffect
 	private:
 		Color chroma;
 	};
+
+
+
 }
