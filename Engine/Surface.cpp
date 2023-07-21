@@ -80,6 +80,17 @@ Surface::Surface( const Surface& rhs )
 	}
 }
 
+Surface::Surface(Surface&& donor)
+	:
+	width(donor.width),
+	height(donor.height),
+	pPixels(donor.pPixels)
+{
+	donor.pPixels = nullptr;
+	donor.width = 0;
+	donor.height = 0;
+}
+
 Surface::~Surface()
 {
 	delete [] pPixels;
@@ -88,16 +99,35 @@ Surface::~Surface()
 
 Surface& Surface::operator=( const Surface& rhs )
 {
-	width = rhs.width;
-	height = rhs.height;
-
-	delete [] pPixels;
-	pPixels = new Color[width*height];
-
-	const int nPixels = width * height;
-	for( int i = 0; i < nPixels; i++ )
+	if (&rhs != this)
 	{
-		pPixels[i] = rhs.pPixels[i];
+		width = rhs.width;
+		height = rhs.height;
+
+		delete[] pPixels;
+		pPixels = new Color[width * height];
+
+		const int nPixels = width * height;
+		for (int i = 0; i < nPixels; i++)
+		{
+			pPixels[i] = rhs.pPixels[i];
+		}
+	}
+	return *this;
+}
+
+Surface& Surface::operator=( Surface&& rhs)
+{
+	if (&rhs != this)
+	{
+		width = rhs.width;
+		height = rhs.height;
+
+		delete[] pPixels;
+		pPixels = rhs.pPixels;
+		rhs.pPixels = nullptr;
+		rhs.width = 0;
+		rhs.height = 0;
 	}
 	return *this;
 }
