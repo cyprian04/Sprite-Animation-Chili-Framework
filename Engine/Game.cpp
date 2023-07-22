@@ -26,11 +26,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-	for (int i = 0; i < 32; i++)
-	{
-		surfaces.emplace_back("Images\\link90x90.bmp");
-	}
-	surfaces[3] = std::move(surfaces[12]);
+	Surface s1(10, 10);
+	Surface s2 = std::move(s1);
 }
 
 void Game::Go()
