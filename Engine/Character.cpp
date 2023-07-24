@@ -2,7 +2,7 @@
 
 Character::Character(const Vec2& pos)
 	:
-	sprite("Images\\link90x90.bmp"),
+	sprite("Images\\lik90x90.bmp"), // erased n char in word link for custom Exception testing
 	pos(pos)
 {
 	for (int i = 0; i < (int)Sequence::StandingLeft; i++)

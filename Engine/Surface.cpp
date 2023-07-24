@@ -6,7 +6,6 @@
 Surface::Surface(const std::string& filename)
 {
 	std::ifstream file(filename, std::ios::binary);
-	assert(file);
 
 	BITMAPFILEHEADER bmFileHeader;
 	file.read(reinterpret_cast<char*>(&bmFileHeader), sizeof(bmFileHeader));
@@ -14,8 +13,22 @@ Surface::Surface(const std::string& filename)
 	BITMAPINFOHEADER bmInfoHeader;
 	file.read(reinterpret_cast<char*>(&bmInfoHeader), sizeof(bmInfoHeader));
 
-	assert(bmInfoHeader.biBitCount == 24 || bmInfoHeader.biBitCount == 32);
-	assert(bmInfoHeader.biCompression == BI_RGB);
+	try
+	{
+		if (!file)
+			throw std::runtime_error("Can't open a file");
+		if (bmInfoHeader.biBitCount != 24 || bmInfoHeader.biBitCount != 32)
+			throw std::runtime_error("Bad bitCount");
+		if(bmInfoHeader.biCompression != BI_RGB)
+			throw std::runtime_error("Bad bitCompression");
+	}
+	catch (const std::runtime_error& e)
+	{
+		const std::string whatStr(e.what());
+		const std::wstring eMsg = std::wstring(whatStr.begin(), whatStr.end());
+		MessageBox(nullptr, eMsg.c_str(), L"File Exception", MB_ICONERROR);
+	}
+
 	const bool is32Bit = bmInfoHeader.biBitCount == 32;
 
 	width = bmInfoHeader.biWidth;
